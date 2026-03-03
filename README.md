@@ -4,7 +4,9 @@ Graphics done with the Tk Interface (tkinter) package included in Python
 
 Instructions:
 Your goal is to escape Shawshank Prison
+
 Acceptable Commands:
+
 Get command - structured "get (object name)": allows player to add visible objects to inventory
 Put command - structured "put (object name)": allows player to leave inventory opject at thier current location
 Use command - structured "use (object name)": allows player to use objects in thier inventory
