@@ -11,8 +11,10 @@ Acceptable Commands:
   
   Put command - structured "put (object name)": allows player to leave inventory opject at thier current location
   
-  Use command - structured "use (object name)": allows player to use objects in thier inventory
+  Use command - structured "use (object name)": allows player to use objects in their inventory
   
   Talk command - structured "talk to (character name)": allows player to talk to npcs
   
   Buy command -  structured "buy (object name)": player can buy objects for specified price
+
+  Open command - structured "open (object name)": allows player to open specific objects
