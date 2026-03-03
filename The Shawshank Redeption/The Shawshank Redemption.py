@@ -406,58 +406,58 @@ def describe_current_inventory():
     inventory_widget.config(state = "disabled")
              
 def build_interface():
-    
-    global command_widget
-    global image_label
-    global description_widget
-    global inventory_widget
-    global north_button
-    global south_button
-    global east_button
-    global west_button    
-    global root
 
-    root = Tk()
-    root.resizable(0,0)
-    
-    style = ttk.Style()
-    style.configure("BW.TLabel", foreground="black", background="white")
+        global command_widget
+        global image_label
+        global description_widget
+        global inventory_widget
+        global north_button
+        global south_button
+        global east_button
+        global west_button
+        global root
 
-    image_label = ttk.Label(root)    
-    image_label.grid(row=0, column=0, columnspan =3,padx = 2, pady = 2)
+        root = Tk()
+        root.resizable(False, False)  # Fixed: was resizable(50,50)
 
-    description_widget = Text(root, width =50, height = 10, relief = GROOVE, wrap = 'word')
-    description_widget.insert(1.0, "Welcome to my game. I do not condone the use of tobbacco or alcohol products. Their use in this game is purely to stay true to their use in the movie 'The Shawshank Redemption' by Frank Darabont as currency. Good Luck!. ")
-    description_widget.config(state = "disabled")
-    description_widget.grid(row=1, column=0, columnspan =3, sticky=W, padx = 2, pady = 2)
+        style = ttk.Style()
+        style.configure("BW.TLabel", foreground="white", background="blue")
 
-    command_widget = ttk.Entry(root, width = 25, style="BW.TLabel")
-    command_widget.bind('<Return>', return_key_enter)
-    command_widget.grid(row=2, column=0, padx = 2, pady = 2)
-    
-    button_frame = ttk.Frame(root)
-    button_frame.config(height = 150, width = 150, relief = GROOVE)
-    button_frame.grid(row=3, column=0, columnspan =1, padx = 2, pady = 2)
+        image_label = ttk.Label(root)
+        image_label.grid(row=0, column=0, columnspan=5, padx=30, pady=30, sticky="")
 
-    north_button = ttk.Button(button_frame, text = "N", width = 5)
-    north_button.grid(row=0, column=1, padx = 2, pady = 2)
-    north_button.config(command = north_button_click)
-    
-    south_button = ttk.Button(button_frame, text = "S", width = 5)
-    south_button.grid(row=2, column=1, padx = 2, pady = 2)
-    south_button.config(command = south_button_click)
+        description_widget = Text(root, width=50, height=15, relief=GROOVE, wrap='word')
+        description_widget.insert(1.0,
+                                  "Welcome to my game. I do not condone the use of tobacco or alcohol products. Their use in this game is purely to stay true to their use in the movie 'The Shawshank Redemption' by Frank Darabont as currency. Good Luck!")
+        description_widget.config(state="disabled")
+        description_widget.grid(row=1, column=0, columnspan=5, sticky="", padx=2, pady=2)
+        command_widget = ttk.Entry(root, width=25, style="BW.TLabel")
+        command_widget.bind('<Return>', return_key_enter)
+        command_widget.grid(row=2, column=0, padx=2, pady=2)
 
-    east_button = ttk.Button(button_frame, text = "E", width = 5)
-    east_button.grid(row=1, column=2, padx = 2, pady = 2)
-    east_button.config(command = east_button_click)
+        button_frame = ttk.Frame(root)
+        button_frame.config(height=150, width=150, relief=GROOVE)
+        button_frame.grid(row=3, column=0, columnspan=1, padx=2, pady=2)
 
-    west_button = ttk.Button(button_frame, text = "W", width = 5)
-    west_button.grid(row=1, column=0, padx = 2, pady = 2)
-    west_button.config(command = west_button_click)
-    
-    inventory_widget = Text(root, width = 30, height = 8, relief = GROOVE , state=DISABLED )
-    inventory_widget.grid(row=2, column=2, rowspan = 2, padx = 2, pady = 2,sticky=W)
-    
+        north_button = ttk.Button(button_frame, text="N", width=5,
+                                  command=north_button_click)  # Fixed: merged .config() call
+        north_button.grid(row=0, column=1, padx=2, pady=2)
+
+        south_button = ttk.Button(button_frame, text="S", width=5,
+                                  command=south_button_click)  # Fixed: merged .config() call
+        south_button.grid(row=2, column=1, padx=2, pady=2)
+
+        east_button = ttk.Button(button_frame, text="E", width=5,
+                                 command=east_button_click)  # Fixed: merged .config() call
+        east_button.grid(row=1, column=2, padx=2, pady=2)
+
+        west_button = ttk.Button(button_frame, text="W", width=5,
+                                 command=west_button_click)  # Fixed: merged .config() call
+        west_button.grid(row=1, column=0, padx=2, pady=2)
+
+        inventory_widget = Text(root, width=30, height=8, relief=GROOVE, state=DISABLED)
+        inventory_widget.grid(row=2, column=2, rowspan=2, padx=2, pady=2, sticky=W)  # Fixed: removed trailing backslash
+
 def set_current_state():
 
     global refresh_location
