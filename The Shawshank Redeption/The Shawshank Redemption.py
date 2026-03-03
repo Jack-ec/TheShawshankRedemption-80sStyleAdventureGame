@@ -30,7 +30,7 @@ whiskey = GameObject.GameObject("bottle of whiskey", 6, True, True, False,
 cigars = GameObject.GameObject("package of cigars", 7, True, True, False,
                                "cigarettes, cigars and alcohol are a form of currency in Shawshank Prison. You better hold on to these.")
 red = GameObject.GameObject("Red", 9, False, True, False,
-                            "Red is the guy in shawshank prison who can get stuff. whiskey, playing cards you name it. He might even have something that can help you escape.")
+                            "Red is the guy in Shawshank prison who can get stuff. whiskey, playing cards you name it. He might even have something that can help you escape.")
 rock_hammer = GameObject.GameObject("Rock Hammer", 3, True, False, False,
                                     "This rock hammer was hidden in a bible. You could probably dig a tunnel with this but you would need something to cover the hole with.")
 poster = GameObject.GameObject("Poster", 9, True, False, False, "You could cover a tunnel with this poster")
@@ -459,7 +459,7 @@ def build_interface():
     controls_frame = ttk.Frame(root)
     controls_frame.grid(row=2, column=0, columnspan=2, padx=2, pady=2, sticky="w")
 
-    PLACEHOLDER = "What would you like to do?"
+    PLACEHOLDER = "What would you like to do?..."
 
     command_widget = Text(controls_frame, width=19, height=1,
                           bg="#00008b", fg="#aaaaaa", insertbackground="white",
