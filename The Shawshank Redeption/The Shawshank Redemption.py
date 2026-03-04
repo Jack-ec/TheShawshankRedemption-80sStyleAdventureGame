@@ -30,7 +30,7 @@ whiskey = GameObject.GameObject("bottle of whiskey", 6, True, True, False,
 cigars = GameObject.GameObject("package of cigars", 7, True, True, False,
                                "cigarettes, cigars and alcohol are a form of currency in Shawshank Prison. You better hold on to these.")
 red = GameObject.GameObject("Red", 9, False, True, False,
-                            "Red is the guy in Shawshank prison who can get stuff. whiskey, playing cards you name it. He might even have something that can help you escape.")
+                            "Red is the guy in shawshank prison who can get stuff. whiskey, playing cards you name it. He might even have something that can help you escape.")
 rock_hammer = GameObject.GameObject("Rock Hammer", 3, True, False, False,
                                     "This rock hammer was hidden in a bible. You could probably dig a tunnel with this but you would need something to cover the hole with.")
 poster = GameObject.GameObject("Poster", 9, True, False, False, "You could cover a tunnel with this poster")
@@ -448,25 +448,47 @@ def build_interface():
     root.title("The Shawshank Redemption")
     root.resizable(False, False)
 
-    image_label = ttk.Label(root)
-    image_label.grid(row=0, column=0, columnspan=5, padx=30, pady=30, sticky="")
+    # Derive scale factor from screen height relative to a 1080p baseline
+    screen_w = root.winfo_screenwidth()
+    screen_h = root.winfo_screenheight()
+    s = min(screen_w / 1280, screen_h / 1080)
 
-    description_widget = Text(root, width=50, height=15, relief=GROOVE, wrap='word')
+    def fs(n):
+        return max(8, int(n * s))  # font size
+
+    def ws(n):
+        return max(1, int(n * s))  # widget width/height in chars
+
+    def px(n):
+        return max(1, int(n * s))  # pixel padding
+
+    # Let tkinter size the window to fit the scaled widgets, then centre it
+    root.update_idletasks()
+    x = (screen_w - root.winfo_reqwidth()) // 2
+    y = (screen_h - root.winfo_reqheight()) // 2
+    root.geometry(f"+{x}+{y}")
+
+    image_label = ttk.Label(root)
+    image_label.grid(row=0, column=0, columnspan=5, padx=px(30), pady=px(30), sticky="")
+
+    description_widget = Text(root, width=ws(50), height=ws(15), relief=GROOVE, wrap='word',
+                              font=("Helvetica", fs(11)))
     description_widget.insert(1.0,
                               "Welcome to an 80s Style Dialogue Adventure Game Based on the Critically Acclaimed Film Adaptation of Steven Kings 1982 novella, Good Luck!")
     description_widget.config(state="disabled")
-    description_widget.grid(row=1, column=0, columnspan=5, sticky="", padx=2, pady=2)
+    description_widget.grid(row=1, column=0, columnspan=5, sticky="", padx=px(2), pady=px(2))
+
     controls_frame = ttk.Frame(root)
-    controls_frame.grid(row=2, column=0, columnspan=2, padx=2, pady=2, sticky="w")
+    controls_frame.grid(row=2, column=0, columnspan=2, padx=px(2), pady=px(2), sticky="w")
 
     PLACEHOLDER = "What would you like to do?..."
 
-    command_widget = Text(controls_frame, width=19, height=1,
+    command_widget = Text(controls_frame, width=ws(19), height=1,
                           bg="#00008b", fg="#aaaaaa", insertbackground="white",
-                          font=("Helvetica", 10), relief=GROOVE, bd=2)
+                          font=("Helvetica", fs(10)), relief=GROOVE, bd=2)
     command_widget.insert("1.0", PLACEHOLDER)
     command_widget.bind('<Return>', return_key_enter)
-    command_widget.grid(row=0, column=0, padx=(2, 0), pady=(2, 0), sticky="ew")
+    command_widget.grid(row=0, column=0, padx=(px(2), 0), pady=(px(2), 0), sticky="ew")
 
     def on_focus_in(event):
         if command_widget.get("1.0", END).strip() == PLACEHOLDER:
@@ -483,27 +505,28 @@ def build_interface():
 
     button_frame = ttk.Frame(controls_frame)
     button_frame.config(relief=GROOVE)
-    button_frame.grid(row=1, column=0, padx=2, pady=2, sticky="w")
+    button_frame.grid(row=1, column=0, padx=px(2), pady=px(2), sticky="w")
 
-    btn_opts = dict(width=5, height=2, relief=RAISED,
+    btn_opts = dict(width=ws(5), height=ws(2), relief=RAISED,
                     bg="#4a90d9", fg="white", activebackground="#2c6fad",
-                    activeforeground="white", font=("Helvetica", 11, "bold"),
+                    activeforeground="white", font=("Helvetica", fs(11), "bold"),
                     cursor="hand2", bd=2)
 
     north_button = Button(button_frame, text="N", command=north_button_click, **btn_opts)
-    north_button.grid(row=0, column=1, padx=4, pady=4)
+    north_button.grid(row=0, column=1, padx=px(4), pady=px(4))
 
     south_button = Button(button_frame, text="S", command=south_button_click, **btn_opts)
-    south_button.grid(row=2, column=1, padx=4, pady=4)
+    south_button.grid(row=2, column=1, padx=px(4), pady=px(4))
 
     east_button = Button(button_frame, text="E", command=east_button_click, **btn_opts)
-    east_button.grid(row=1, column=2, padx=4, pady=4)
+    east_button.grid(row=1, column=2, padx=px(4), pady=px(4))
 
     west_button = Button(button_frame, text="W", command=west_button_click, **btn_opts)
-    west_button.grid(row=1, column=0, padx=4, pady=4)
+    west_button.grid(row=1, column=0, padx=px(4), pady=px(4))
 
-    inventory_widget = Text(root, width=30, height=8, relief=GROOVE, state=DISABLED)
-    inventory_widget.grid(row=2, column=2, rowspan=2, padx=2, pady=2, sticky=W)
+    inventory_widget = Text(root, width=ws(30), height=ws(8), relief=GROOVE, state=DISABLED,
+                            font=("Helvetica", fs(11)))
+    inventory_widget.grid(row=2, column=2, rowspan=2, padx=px(2), pady=px(2), sticky=W)
 
 
 def set_current_state():
