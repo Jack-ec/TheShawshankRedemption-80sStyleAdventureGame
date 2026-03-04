@@ -513,7 +513,7 @@ def build_interface():
     west_button = Button(button_frame, text="W", command=west_button_click, **btn_opts)
     west_button.grid(row=1, column=0, padx=px(4), pady=px(4))
 
-    inventory_widget = Text(root, width=20, height=8, relief=GROOVE, state=DISABLED,
+    inventory_widget = Text(root, width=21, height=8, relief=GROOVE, state=DISABLED,
                             font=base_font)
     inventory_widget.grid(row=2, column=2, rowspan=2, padx=px(2), pady=px(2), sticky=W)
 
