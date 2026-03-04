@@ -448,31 +448,20 @@ def build_interface():
     root.title("The Shawshank Redemption")
     root.resizable(False, False)
 
-    # Derive scale factor from screen height relative to a 1080p baseline
+    # Scale only the font, let widget char units follow naturally
     screen_w = root.winfo_screenwidth()
     screen_h = root.winfo_screenheight()
     s = min(screen_w / 1280, screen_h / 1080)
-
-    def fs(n):
-        return max(8, int(n * s))  # font size
-
-    def ws(n):
-        return max(1, int(n * s))  # widget width/height in chars
-
-    def px(n):
-        return max(1, int(n * s))  # pixel padding
-
-    # Let tkinter size the window to fit the scaled widgets, then centre it
-    root.update_idletasks()
-    x = (screen_w - root.winfo_reqwidth()) // 2
-    y = (screen_h - root.winfo_reqheight()) // 2
-    root.geometry(f"+{x}+{y}")
+    base_font = ("Helvetica", max(8, int(11 * s)))
+    small_font = ("Helvetica", max(7, int(10 * s)))
+    btn_font = ("Helvetica", max(8, int(11 * s)), "bold")
+    px = lambda n: max(1, int(n * s))
 
     image_label = ttk.Label(root)
-    image_label.grid(row=0, column=0, columnspan=5, padx=px(30), pady=px(30), sticky="")
+    image_label.grid(row=0, column=0, columnspan=5, padx=px(30), pady=px(15), sticky="")
 
-    description_widget = Text(root, width=ws(50), height=ws(15), relief=GROOVE, wrap='word',
-                              font=("Helvetica", fs(11)))
+    description_widget = Text(root, width=50, height=10, relief=GROOVE, wrap='word',
+                              font=base_font)
     description_widget.insert(1.0,
                               "Welcome to an 80s Style Dialogue Adventure Game Based on the Critically Acclaimed Film Adaptation of Steven Kings 1982 novella, Good Luck!")
     description_widget.config(state="disabled")
@@ -483,9 +472,9 @@ def build_interface():
 
     PLACEHOLDER = "What would you like to do?..."
 
-    command_widget = Text(controls_frame, width=ws(19), height=1,
+    command_widget = Text(controls_frame, width=19, height=1,
                           bg="#00008b", fg="#aaaaaa", insertbackground="white",
-                          font=("Helvetica", fs(10)), relief=GROOVE, bd=2)
+                          font=small_font, relief=GROOVE, bd=2)
     command_widget.insert("1.0", PLACEHOLDER)
     command_widget.bind('<Return>', return_key_enter)
     command_widget.grid(row=0, column=0, padx=(px(2), 0), pady=(px(2), 0), sticky="ew")
@@ -507,9 +496,9 @@ def build_interface():
     button_frame.config(relief=GROOVE)
     button_frame.grid(row=1, column=0, padx=px(2), pady=px(2), sticky="w")
 
-    btn_opts = dict(width=ws(5), height=ws(2), relief=RAISED,
+    btn_opts = dict(width=5, height=2, relief=RAISED,
                     bg="#4a90d9", fg="white", activebackground="#2c6fad",
-                    activeforeground="white", font=("Helvetica", fs(11), "bold"),
+                    activeforeground="white", font=btn_font,
                     cursor="hand2", bd=2)
 
     north_button = Button(button_frame, text="N", command=north_button_click, **btn_opts)
@@ -524,9 +513,15 @@ def build_interface():
     west_button = Button(button_frame, text="W", command=west_button_click, **btn_opts)
     west_button.grid(row=1, column=0, padx=px(4), pady=px(4))
 
-    inventory_widget = Text(root, width=ws(30), height=ws(8), relief=GROOVE, state=DISABLED,
-                            font=("Helvetica", fs(11)))
+    inventory_widget = Text(root, width=20, height=8, relief=GROOVE, state=DISABLED,
+                            font=base_font)
     inventory_widget.grid(row=2, column=2, rowspan=2, padx=px(2), pady=px(2), sticky=W)
+
+    # Centre the window once widgets have determined its natural size
+    root.update_idletasks()
+    w = root.winfo_reqwidth()
+    h = root.winfo_reqheight()
+    root.geometry(f"+{(screen_w - w) // 2}+{(screen_h - h) // 2}")
 
 
 def set_current_state():
