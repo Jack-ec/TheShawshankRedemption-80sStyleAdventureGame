@@ -460,7 +460,7 @@ def build_interface():
     image_label = ttk.Label(root)
     image_label.grid(row=0, column=0, columnspan=5, padx=px(30), pady=px(15), sticky="")
 
-    description_widget = Text(root, width=50, height=10, relief=GROOVE, wrap='word',
+    description_widget = Text(root, width=50, height=11, relief=GROOVE, wrap='word',
                               font=base_font)
     description_widget.insert(1.0,
                               "Welcome to an 80s Style Dialogue Adventure Game Based on the Critically Acclaimed Film Adaptation of Steven Kings 1982 novella, Good Luck!")
