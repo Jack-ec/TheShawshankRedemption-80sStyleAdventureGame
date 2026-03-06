@@ -12,12 +12,14 @@ east_button = None
 west_button = None
 root = None
 
+#Event States
 rock_hammer_found = False
 talked_to_red = False
 tunnel_dug = False
 refresh_location = True
 refresh_objects_visible = True
 
+#Object and Game Initialisations
 current_location = 1
 end_of_game = False
 
@@ -34,9 +36,10 @@ red = GameObject.GameObject("Red", 9, False, True, False,
 rock_hammer = GameObject.GameObject("Rock Hammer", 3, True, False, False,
                                     "This rock hammer was hidden in a bible. You could probably dig a tunnel with this but you would need something to cover the hole with.")
 poster = GameObject.GameObject("Poster", 9, True, False, False, "You could cover a tunnel with this poster")
+
 game_objects = [bible, cigarettes, whiskey, cigars, red, rock_hammer, poster]
 
-
+#Actions and Input handling
 def perform_command(verb, noun):
     if verb == "GO":
         perform_go_command(noun)
@@ -238,7 +241,7 @@ def perform_open_command(object_name):
     else:
         print_to_description("You can't open that")
 
-
+##Game Logic
 def describe_current_location():
     ## description of all locations
     if current_location == 1:
@@ -432,7 +435,7 @@ def describe_current_inventory():
     inventory_widget.insert(1.0, inventory)
     inventory_widget.config(state="disabled")
 
-
+##Tkinter Graphics
 def build_interface():
     global command_widget
     global image_label
@@ -455,6 +458,7 @@ def build_interface():
     base_font = ("Helvetica", max(8, int(11 * s)))
     small_font = ("Helvetica", max(7, int(10 * s)))
     btn_font = ("Helvetica", max(8, int(11 * s)), "bold")
+    ##Scaling factor
     px = lambda n: max(1, int(n * s))
 
     image_label = ttk.Label(root)
